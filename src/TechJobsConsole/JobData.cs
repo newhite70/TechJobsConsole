@@ -16,6 +16,37 @@ namespace TechJobsConsole
             return AllJobs;
         }
 
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+            //Converts to lower case so that each search is not case sensitive
+            value = value.ToLower();
+            //Create a new List Dictionary for displaying the results
+            List<Dictionary<string, string>> allSearch = new List<Dictionary<string, string>>();
+            //itterate over each job within the all jobs dictionary
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                //itterate over each row within the job
+                foreach (KeyValuePair<string, string> row in job)
+                {
+                //converts row values to lower case for case insitivity
+                string aValue = row.Value.ToLower();
+                /*  haven't verified but should not contain duplicate due to this
+                    if the job value contains the search value AND the Job is not 
+                    already in the allSearch returnable, then place that job in
+                    the returnable.
+                */
+                if (aValue.Contains(value) && !allSearch.Contains(job))
+                    {
+                        //add to the returnable
+                        allSearch.Add(job);
+                    }
+                }
+            }
+            return allSearch;
+        }
+
+
         /*
          * Returns a list of all values contained in a given column,
          * without duplicates. 
@@ -38,16 +69,20 @@ namespace TechJobsConsole
             return values;
         }
 
+
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
+            
             // load data, if not already loaded
             LoadData();
+            value = value.ToLower();
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
+                // changed to make the results non case sensitive
+                string aValue = row[column].ToLower();
 
                 if (aValue.Contains(value))
                 {
@@ -102,6 +137,9 @@ namespace TechJobsConsole
             IsDataLoaded = true;
         }
 
+
+
+
         /*
          * Parse a single line of a CSV file into a string array
          */
@@ -132,6 +170,7 @@ namespace TechJobsConsole
                 }
             }
 
+
             // Add the final value
             rowValues.Add(valueBuilder.ToString());
             valueBuilder.Clear();
@@ -140,3 +179,10 @@ namespace TechJobsConsole
         }
     }
 }
+
+
+
+
+
+
+

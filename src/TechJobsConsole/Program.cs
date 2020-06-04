@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TechJobsConsole
 {
+ 
     class Program
     {
         static void Main(string[] args)
@@ -63,7 +64,7 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        PrintJobs(JobData.FindByValue(searchTerm));
                     }
                     else
                     {
@@ -71,8 +72,11 @@ namespace TechJobsConsole
                         PrintJobs(searchResults);
                     }
                 }
+
             }
         }
+
+       
 
         /*
          * Returns the key of the selected item from the choices Dictionary
@@ -118,7 +122,25 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+            //prints no results
+            if (someJobs.Count == 0)
+            {
+                Console.WriteLine("No results.");
+            }
+            //itterate over each job in the someJobs list.
+            foreach (Dictionary<string, string> job in someJobs)
+            {
+                Console.WriteLine("*****");
+                foreach (KeyValuePair<string, string> pair in job)
+                {
+                    Console.WriteLine(string.Format("{0} : {1}", pair.Key, pair.Value));                 
+                }
+                Console.WriteLine("*****\n");
+            }
+
+            //Console.WriteLine("printJobs is not implemented yet");
         }
     }
 }
+
+
