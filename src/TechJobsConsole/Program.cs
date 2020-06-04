@@ -122,6 +122,7 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
+            
             //prints no results
             if (someJobs.Count == 0)
             {
